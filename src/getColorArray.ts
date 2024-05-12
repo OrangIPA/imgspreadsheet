@@ -1,10 +1,11 @@
 import { Ref, onMounted } from "vue";
+import { Input } from "./components/ui/input";
 
-export default function(imgInput: Ref<HTMLInputElement | null>, canvas: Ref<HTMLCanvasElement | null>, callback: (colorArray: {r: number, g: number, b: number, a: number}[][]) => void) {
+export default function(imgInput: Ref<InstanceType<typeof Input> | null>, canvas: Ref<HTMLCanvasElement | null>, callback: (colorArray: {r: number, g: number, b: number, a: number}[][]) => void) {
   onMounted(() => {
     const ctx = canvas.value?.getContext("2d");
   
-    imgInput.value?.addEventListener("change", (event): any => {
+    imgInput.value?.inputRef?.addEventListener("change", (event): any => {
       const file = (event.target as HTMLInputElement).files?.[0];
       if (!file) return;
   

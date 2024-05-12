@@ -23,12 +23,10 @@ type CellParam = {
   };
 };
 
-const imgInput = ref<HTMLInputElement | null>(null);
+const imgInput = ref<InstanceType<typeof Input> | null>(null);
 const canvas = ref<HTMLCanvasElement | null>(null);
 
 getColorArray(imgInput, canvas, (colorArray) => {
-  console.log(colorArray);
-
   const wb = XLSX.utils.book_new();
 
   const rows: CellParam[][] = [];
@@ -36,13 +34,10 @@ getColorArray(imgInput, canvas, (colorArray) => {
     const row: CellParam[] = [];
     for (const color of colorRow) {
       const hexColor = rgbToHex(color.r, color.g, color.b);
-      console.log(hexColor);
       row.push({ v: "", t: "s", s: { fill: { fgColor: { rgb: hexColor } } } });
     }
     rows.push(row);
   }
-
-  console.log(rows);
 
   const ws = XLSX.utils.aoa_to_sheet(rows);
   XLSX.utils.book_append_sheet(wb, ws);
